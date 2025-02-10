@@ -44,4 +44,6 @@ router.get("/songs", function(req,res) {
 // all requests taht use an api start with /api...
     // localhost:3000/api/songs
 app.use("/api", router)
-app.listen(3000)
+app.listen(process.env.PORT || 3000, function () {
+    console.log("listening on port", process.env.PORT || 3000);
+  });
