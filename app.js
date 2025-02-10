@@ -6,7 +6,7 @@ const app = express()
 const router = express.Router()
 
 app.use(cors())
-app.use("/api", router)
+
 
 // start web server... app.listen(portnumber,function)
 // app.listen(3000,function() {
@@ -17,8 +17,11 @@ app.use("/api", router)
 // routes are used to handle browser requests, 
 // look like url, dynamically handled using function
 
-
+app.get("/", (req, res) => {
+  res.send("Welcome to the backend song application!");
+});
 // GET requests for http://localhost:3000/hello
+
 
 router.get("/songs", function(req,res) {
     const songs = [
@@ -44,6 +47,7 @@ router.get("/songs", function(req,res) {
 
 // all requests taht use an api start with /api...
     // localhost:3000/api/songs
+app.use("/api", router)
 
 app.listen(process.env.PORT || 3000, function () {
     console.log("listening on port", process.env.PORT || 3000);
