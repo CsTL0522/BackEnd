@@ -3,9 +3,10 @@ const express = require("express")
 var cors = require('cors') // use this to use both
 // activate to tell to be an express variable
 const app = express()
-app.use(cors())
 const router = express.Router()
 
+app.use(cors())
+app.use("/api", router)
 
 // start web server... app.listen(portnumber,function)
 // app.listen(3000,function() {
@@ -43,7 +44,7 @@ router.get("/songs", function(req,res) {
 
 // all requests taht use an api start with /api...
     // localhost:3000/api/songs
-app.use("/api", router)
+
 app.listen(process.env.PORT || 3000, function () {
     console.log("listening on port", process.env.PORT || 3000);
   });
