@@ -2,6 +2,11 @@
 const express = require("express")
 var cors = require('cors') // use this to use both
 // activate to tell to be an express variable
+const { TextEncoder, TextDecoder } = require('util');
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+const mongoose = require("mongoose")
 const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
