@@ -4,20 +4,20 @@
   "description": "backend song application",
   "main": "app.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "server": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-
+    "server": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "nodemon": "^3.1.9",
-    "mongoose": "^6.2.0"
+    "express": "^4.18.2",
+    "nodemon": "^3.1.0",
+    "mongoose": "^7.5.0",
+    "body-parser": "^1.20.2"
   },
-  "engines": {
-    "node": "^14.0.0"
+    "engines": {
+    "node": "^16.x"
   }
 }
