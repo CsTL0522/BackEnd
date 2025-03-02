@@ -11,11 +11,63 @@ const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
 const Song = require("./models/song")
+const jwt = require('jwt-simple')
+const User = require("./models/users")
+const secret = "supersecret"
 
 app.use(cors())
 
 app.use(bodyParser.json())
 
+router.post("/user", async(req,res) =>{
+    if(!req.body.username || !req.body.password){
+       res.status(400).json({error: "Missing username or passwword"})
+    }
+    const newUser = await new User({
+       username: req.body.username,
+       password: req.body.password,
+       status: req.body.status
+    })
+    try{
+       await newUser.save()
+       res.sendStatus(201) 
+    }
+    catch(err){
+       res.status(400).send
+    }
+ })
+ 
+ //authenticate  to sign in
+ router.post("/auth", async(req,res) =>{
+    if(!req.body.username || !req.body.password){
+       res.status(401).json({error: "Missing username or password"})
+       return
+    }
+    //find  user 
+    try{
+       const user = await User.findOne({username: req.body.username})
+       if (!user){
+          res.status(401).json({error: "User not found"})
+      
+       }
+       else{
+          //check the username and password 
+          if(user.password === req.body.password){
+             //create a token
+             const token = jwt.encode({username: user.username}, secret)
+             res.json({token: token, username: user.username})
+          }
+          else{
+             res.status(401).json({error: "Invalid password"})
+          }
+       }
+    }
+    catch(err){
+       res.status(400).send(err.message)
+    }
+ 
+       
+    })
 
 // grab all songs in database
 
@@ -68,6 +120,14 @@ router.put("/songs/:id", async (req,res) =>{
     }
 })
 
+router.delete("/songs/:id",async(req,res) => {
+    try{
+        Song.deleteOne({_id: req.params.id})
+    }
+        catch(err){
+            res.status(400).send(err)
+    }
+})
 
 app.use("/api", router)
 
